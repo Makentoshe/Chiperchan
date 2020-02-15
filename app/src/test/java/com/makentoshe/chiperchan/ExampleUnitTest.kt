@@ -1,5 +1,6 @@
 package com.makentoshe.chiperchan
 
+import com.makentoshe.chiperchan.model.CaesarCipher
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -13,5 +14,15 @@ class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
+    }
+
+    @Test
+    fun sas() {
+        val caesarCipher = CaesarCipher.Factory(4, 26).build()
+        val string = "ATTACKATONCE"
+        val encodedString = caesarCipher.encode(string)
+        println(encodedString)
+        val decodedString = caesarCipher.decode(encodedString)
+        println(decodedString)
     }
 }
