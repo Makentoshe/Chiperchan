@@ -1,9 +1,8 @@
 package com.makentoshe.chiperchan
 
 import com.makentoshe.chiperchan.model.CaesarCipher
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -18,7 +17,7 @@ class ExampleUnitTest {
 
     @Test
     fun sas() {
-        val caesarCipher = CaesarCipher.Factory(4, 26).build()
+        val caesarCipher = CaesarCipher.Factory().build(mapOf("shift" to 4))
         val string = "ATTACKATONCE"
         val encodedString = caesarCipher.encode(string)
         println(encodedString)

@@ -9,8 +9,12 @@ interface Cipher {
     fun decode(string: String): String
 
     interface Factory {
-        fun build(): Cipher
+        fun build(parameters: Map<String, Any>): Cipher
+        fun getParameters(): List<Parameter>
     }
+
+    class Parameter(val name: String, val spec: Spec)
+    class Spec(val converter: (String) -> Any)
 }
 
 class CaesarCipher private constructor(private val shift: Int, private val alphabetLength: Int) : Cipher {
@@ -33,9 +37,24 @@ class CaesarCipher private constructor(private val shift: Int, private val alpha
         }
     }.toString()
 
-    class Factory(
-        private val shift: Int, private val alphabetLength: Int
-    ) : Cipher.Factory {
-        override fun build() = CaesarCipher(shift, alphabetLength)
+    class Factory : Cipher.Factory {
+        private val alphabetLength: Int = 26
+
+        override fun build(parameters: Map<String, Any>): CaesarCipher {
+            val shift = (parameters["shift"] as? Int?)
+                ?: throw IllegalAccessException("`shift` parameter is required and should be int")
+            return CaesarCipher(shift, alphabetLength)
+        }
+
+        override fun getParameters(): List<Cipher.Parameter> {
+            return listOf(
+                Cipher.Parameter(
+                    "shift",
+                    Cipher.Spec {
+                        it.toInt()
+                    }
+                )
+            )
+        }
     }
 }
