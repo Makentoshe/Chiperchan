@@ -14,7 +14,13 @@ interface Cipher {
     }
 
     class Parameter(val name: String, val spec: Spec)
-    class Spec(val converter: (String) -> Any)
+    class Spec(val type: Type)
+
+    enum class Type {
+        String,
+        Int,
+        Boolean
+    }
 }
 
 class CaesarCipher private constructor(private val shift: Int, private val alphabetLength: Int) : Cipher {
@@ -50,9 +56,7 @@ class CaesarCipher private constructor(private val shift: Int, private val alpha
             return listOf(
                 Cipher.Parameter(
                     "shift",
-                    Cipher.Spec {
-                        it.toInt()
-                    }
+                    Cipher.Spec(Cipher.Type.Int)
                 )
             )
         }
