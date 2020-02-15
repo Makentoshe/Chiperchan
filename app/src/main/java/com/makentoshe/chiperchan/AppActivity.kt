@@ -3,7 +3,7 @@ package com.makentoshe.chiperchan
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.makentoshe.chiperchan.common.navigator.Navigator
-import com.makentoshe.chiperchan.model.MainScreen
+import com.makentoshe.chiperchan.model.main.MainScreen
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
