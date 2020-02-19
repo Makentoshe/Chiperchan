@@ -9,6 +9,7 @@ import android.widget.ListView
 import androidx.fragment.app.Fragment
 import com.makentoshe.chiperchan.R
 import com.makentoshe.chiperchan.model.Cipher
+import com.makentoshe.chiperchan.model.cipher.CipherScreen
 import com.makentoshe.chiperchan.ui.main.MainFragmentUi
 import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
@@ -41,7 +42,7 @@ class MainFragment : Fragment() {
 
     class Navigator(private val router: Router) {
         fun toCipherScreen(cipherTitle: String) {
-            println(cipherTitle)
+            router.navigateTo(CipherScreen(cipherTitle))
         }
     }
 }
