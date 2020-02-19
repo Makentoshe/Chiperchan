@@ -68,7 +68,7 @@ class Navigator(
         )
 
         fragmentTransaction
-            .add(containerId, fragment, screen.screenKey)
+            .replace(containerId, fragment, screen.screenKey)
             .addToBackStack(screen.screenKey)
             .commit()
         localStackCopy!!.add(screen.screenKey)

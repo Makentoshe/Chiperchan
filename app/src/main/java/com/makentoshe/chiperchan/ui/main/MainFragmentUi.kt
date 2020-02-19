@@ -7,6 +7,6 @@ import com.makentoshe.chiperchan.R
 
 class MainFragmentUi {
     fun create(context: Context): View {
-        return LayoutInflater.from(context).inflate(R.layout.activity_main, null, false)
+        return LayoutInflater.from(context).inflate(R.layout.main_fragment, null, false)
     }
 }

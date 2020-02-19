@@ -46,6 +46,10 @@ dependencies {
     def cicerone = "5.0.0"
     implementation "ru.terrakok.cicerone:cicerone:$cicerone"
 
+    // Material components
+    // https://github.com/material-components/material-components-android
+    implementation 'com.google.android.material:material:1.1.0'
+
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
