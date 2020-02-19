@@ -11,6 +11,7 @@ import toothpick.Toothpick
 import toothpick.smoothie.lifecycle.closeOnDestroy
 
 class InjectionFragmentLifecycleCallbacks : FragmentManager.FragmentLifecycleCallbacks() {
+
     override fun onFragmentPreAttached(fm: FragmentManager, f: Fragment, context: Context) = when (f) {
         is MainFragment -> injectMainFragment(f)
         else -> Unit

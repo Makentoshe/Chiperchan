@@ -11,9 +11,10 @@ interface Cipher {
     interface Factory {
         fun build(parameters: Map<String, Any>): Cipher
         fun getParameters(): List<Parameter>
+        val title: String
     }
 
-    class Parameter(val name: String, val spec: Spec)
+    class Parameter(val name: String, val displayName: String, val spec: Spec)
     class Spec(val type: Type)
 
     enum class Type {
@@ -44,6 +45,9 @@ class CaesarCipher private constructor(private val shift: Int, private val alpha
     }.toString()
 
     class Factory : Cipher.Factory {
+
+        override val title = "Caesar cipher"
+
         private val alphabetLength: Int = 26
 
         override fun build(parameters: Map<String, Any>): CaesarCipher {
@@ -55,8 +59,9 @@ class CaesarCipher private constructor(private val shift: Int, private val alpha
         override fun getParameters(): List<Cipher.Parameter> {
             return listOf(
                 Cipher.Parameter(
-                    "shift",
-                    Cipher.Spec(Cipher.Type.Int)
+                    name = "shift",
+                    displayName = "Shift",
+                    spec = Cipher.Spec(Cipher.Type.Int)
                 )
             )
         }

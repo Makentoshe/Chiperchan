@@ -33,10 +33,7 @@ class Chipherchan : Application() {
     private fun injectBaseModules() {
         val navigationModule = NavigationModule(cicerone)
         val applicationModule = ApplicationModule(applicationContext)
-        Toothpick.openScopes(ApplicationScope::class.java).installModules(
-            navigationModule, applicationModule
-        )
+        Toothpick.openScopes(ApplicationScope::class.java).installModules(navigationModule, applicationModule)
     }
-
 
 }

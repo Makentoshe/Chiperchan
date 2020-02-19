@@ -1,6 +1,19 @@
 package com.makentoshe.chiperchan.di.common
 
 import android.content.Context
+import com.makentoshe.chiperchan.model.CaesarCipher
+import com.makentoshe.chiperchan.model.Cipher
 import toothpick.config.Module
+import toothpick.ktp.binding.bind
 
-class ApplicationModule(context: Context) : Module()
+class ApplicationModule(context: Context) : Module() {
+
+    private val cipherFactoryList = listOf<Cipher.Factory>(
+        CaesarCipher.Factory()
+    )
+
+    init {
+        bind<List<Cipher.Factory>>().toInstance(cipherFactoryList)
+    }
+
+}
