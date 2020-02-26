@@ -1,8 +1,8 @@
 package com.makentoshe.chiperchan.model
 
-interface Cipher {
+import android.view.View
 
-    val title: String
+interface Cipher {
 
     fun encode(string: String): String
 
@@ -14,7 +14,7 @@ interface Cipher {
         val title: String
     }
 
-    class Parameter(val name: String, val displayName: String, val spec: Spec)
+    class Parameter(val name: String, val displayName: String, val spec: Spec, val viewId: Int = View.generateViewId())
     class Spec(val type: Type)
 
     enum class Type {
@@ -25,8 +25,6 @@ interface Cipher {
 }
 
 class CaesarCipher private constructor(private val shift: Int, private val alphabetLength: Int) : Cipher {
-
-    override val title = "Caesar cipher"
 
     override fun decode(string: String) = transform(string, -shift)
 
@@ -62,6 +60,16 @@ class CaesarCipher private constructor(private val shift: Int, private val alpha
                     name = "shift",
                     displayName = "Shift",
                     spec = Cipher.Spec(Cipher.Type.Int)
+                ),
+                Cipher.Parameter(
+                    name = "string",
+                    displayName = "String",
+                    spec = Cipher.Spec(Cipher.Type.String)
+                ),
+                Cipher.Parameter(
+                    name = "bool",
+                    displayName = "Boolean",
+                    spec = Cipher.Spec(Cipher.Type.Boolean)
                 )
             )
         }

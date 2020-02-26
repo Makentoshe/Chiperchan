@@ -5,14 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
+import androidx.core.view.children
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.makentoshe.chiperchan.R
+import com.makentoshe.chiperchan.common.ui.ParameterUi
 import com.makentoshe.chiperchan.model.Cipher
 import com.makentoshe.chiperchan.ui.cipher.CipherFragmentUi
 import toothpick.ktp.delegate.inject
-import java.io.Serializable
 
 class CipherFragment : Fragment() {
 
@@ -33,7 +35,6 @@ class CipherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val encodeButton = view.findViewById<Button>(R.id.cipher_fragment_encode)
         val decodeButton = view.findViewById<Button>(R.id.cipher_fragment_decode)
-        val inputEditText = view.findViewById<TextInputEditText>(R.id.cipher_fragment_input_edittext)
         val inputLayout = view.findViewById<TextInputLayout>(R.id.cipher_fragment_input)
 
         encodeButton.setOnClickListener {
@@ -42,15 +43,43 @@ class CipherFragment : Fragment() {
             action = Action.Encode
             inputLayout.hint = getString(R.string.encode)
         }
+
         decodeButton.setOnClickListener {
             decodeButton.isEnabled = false
             encodeButton.isEnabled = true
             action = Action.Decode
             inputLayout.hint = getString(R.string.decode)
         }
+
         when (action) {
             is Action.Encode -> encodeButton.performClick()
             is Action.Decode -> decodeButton.performClick()
+        }
+
+        val container = view.findViewById<ViewGroup>(R.id.cipher_fragment_container)
+        val parameterUi = ParameterUi(container)
+        val parameters = cipherFactory.getParameters()
+        parameters.forEach { parameter ->
+            parameterUi.createView(requireContext(), parameter).also(container::addView)
+        }
+
+        inputLayout?.editText?.addTextChangedListener {
+            val sas = parameters.map { parameter ->
+                val view = container.children.find { it.id == parameter.viewId }
+                when (parameter.spec.type) {
+                    Cipher.Type.Int -> {
+                        parameter.name to (view as TextInputLayout).editText?.text?.toString()?.toInt()
+                    }
+                    Cipher.Type.String -> {
+                        parameter.name to (view as TextInputLayout).editText?.text?.toString()
+                    }
+                    Cipher.Type.Boolean -> {
+                        parameter.name to "null"
+                    }
+                }
+            }
+
+            println(sas)
         }
     }
 
@@ -86,9 +115,4 @@ class CipherFragment : Fragment() {
             private const val TITLE = "Title"
         }
     }
-}
-
-sealed class Action : Serializable {
-    object Encode : Action(), Serializable
-    object Decode : Action(), Serializable
 }
