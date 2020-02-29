@@ -23,7 +23,7 @@ class CaesarCipher private constructor(private val shift: Int, private val alpha
             } else if (c in 'а'..'я') {
                 ((c.toInt() + shift - аByte) % alphabetLength + аByte).toChar()
             } else {
-                throw Exception("Сука мудак ты чо эту хуйню ввел: $c")
+                c
             }
 
             append(ch)
