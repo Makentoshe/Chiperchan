@@ -1,4 +1,4 @@
-package com.makentoshe.chiperchan.view.cipher
+package com.makentoshe.chiperchan.model.cipher
 
 import java.io.Serializable
 

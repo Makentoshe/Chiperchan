@@ -14,6 +14,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.makentoshe.chiperchan.R
 import com.makentoshe.chiperchan.common.ui.ParameterUi
 import com.makentoshe.chiperchan.model.Cipher
+import com.makentoshe.chiperchan.model.cipher.Action
 import com.makentoshe.chiperchan.ui.cipher.CipherFragmentUi
 import toothpick.ktp.delegate.inject
 
@@ -76,6 +77,10 @@ class CipherFragment : Fragment() {
 
         inputLayout?.editText?.addTextChangedListener {
             onTextChanged(it.toString() ?: "")
+        }
+
+        inputLayout.setEndIconOnClickListener {
+            inputLayout.editText?.setText("")
         }
     }
 
