@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.children
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -33,6 +34,8 @@ class CipherFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        view.findViewById<Toolbar>(R.id.cipher_fragment_toolbar).title = cipherFactory.title
+
         val encodeButton = view.findViewById<Button>(R.id.cipher_fragment_encode)
         val decodeButton = view.findViewById<Button>(R.id.cipher_fragment_decode)
         val inputLayout = view.findViewById<TextInputLayout>(R.id.cipher_fragment_input)
