@@ -36,12 +36,19 @@ class CipherFragment : Fragment() {
         val encodeButton = view.findViewById<Button>(R.id.cipher_fragment_encode)
         val decodeButton = view.findViewById<Button>(R.id.cipher_fragment_decode)
         val inputLayout = view.findViewById<TextInputLayout>(R.id.cipher_fragment_input)
+        val outputLayout = view.findViewById<TextInputLayout>(R.id.cipher_fragment_output)
 
         encodeButton.setOnClickListener {
             encodeButton.isEnabled = false
             decodeButton.isEnabled = true
             action = Action.Encode
             inputLayout.hint = getString(R.string.encode)
+
+            val output = outputLayout.editText?.text?.toString() ?: ""
+            val input = inputLayout.editText?.text?.toString() ?: ""
+
+            outputLayout.editText?.setText(input)
+            inputLayout.editText?.setText(output)
         }
 
         decodeButton.setOnClickListener {
@@ -49,6 +56,12 @@ class CipherFragment : Fragment() {
             encodeButton.isEnabled = true
             action = Action.Decode
             inputLayout.hint = getString(R.string.decode)
+
+            val output = outputLayout.editText?.text?.toString() ?: ""
+            val input = inputLayout.editText?.text?.toString() ?: ""
+
+            outputLayout.editText?.setText(input)
+            inputLayout.editText?.setText(output)
         }
 
         when (action) {
