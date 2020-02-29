@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
-import android.widget.TextView
 import androidx.core.view.children
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -91,10 +90,10 @@ class CipherFragment : Fragment() {
         return parameters.zip(container.children.toList()).map { (parameter, view) ->
             when (parameter.spec.type) {
                 Cipher.Type.Int -> {
-                    parameter.name to (view as TextInputLayout).editText?.text?.toString()?.toIntOrNull()!!
+                    parameter.name to ((view as TextInputLayout).editText?.text?.toString()?.toIntOrNull() ?: 0)
                 }
                 Cipher.Type.String -> {
-                    parameter.name to (view as TextInputLayout).editText?.text?.toString()!!
+                    parameter.name to ((view as TextInputLayout).editText?.text?.toString() ?: "")
                 }
                 Cipher.Type.Boolean -> {
                     val value = (view as ViewGroup).findViewById<CheckBox>(R.id.checkBox).isChecked
