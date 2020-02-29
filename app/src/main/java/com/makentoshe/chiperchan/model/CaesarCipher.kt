@@ -1,6 +1,12 @@
 package com.makentoshe.chiperchan.model
 
+import java.lang.Exception
+
 class CaesarCipher private constructor(private val shift: Int, private val alphabetLength: Int) : Cipher {
+    private val AByte = 'A'.toByte()
+    private val aByte = 'a'.toByte()
+    private val АByte = 'A'.toByte()
+    private val аByte = 'a'.toByte()
 
     override fun decode(string: String) = transform(string, -shift)
 
@@ -8,10 +14,16 @@ class CaesarCipher private constructor(private val shift: Int, private val alpha
 
     private fun transform(string: String, shift: Int) = StringBuilder().apply {
         for (c in string) {
-            val ch = if (Character.isUpperCase(c)) {
-                ((c.toInt() + shift - 65) % alphabetLength + 65).toChar()
+            val ch = if (c in 'a'..'z') {
+                ((c.toInt() + shift - AByte) % alphabetLength + AByte).toChar()
+            } else if (c in 'A'..'Z') {
+                ((c.toInt() + shift - aByte) % alphabetLength + aByte).toChar()
+            } else if (c in 'А'..'Я') {
+                ((c.toInt() + shift - АByte) % alphabetLength + АByte).toChar()
+            } else if (c in 'а'..'я') {
+                ((c.toInt() + shift - аByte) % alphabetLength + аByte).toChar()
             } else {
-                ((c.toInt() + shift - 97) % alphabetLength + 97).toChar()
+                throw Exception("Сука мудак ты чо эту хуйню ввел: $c")
             }
 
             append(ch)
