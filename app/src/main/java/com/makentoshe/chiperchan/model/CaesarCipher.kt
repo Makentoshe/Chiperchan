@@ -1,12 +1,10 @@
 package com.makentoshe.chiperchan.model
 
-import java.lang.Exception
-
-class CaesarCipher private constructor(private val shift: Int, private val alphabetLength: Int) : Cipher {
-    private val AByte = 'A'.toByte()
-    private val aByte = 'a'.toByte()
-    private val АByte = 'A'.toByte()
-    private val аByte = 'a'.toByte()
+class CaesarCipher private constructor(private val shift: Int) : Cipher {
+    private val AByte = 'A'.toInt()
+    private val aByte = 'a'.toInt()
+    private val АByte = 'А'.toInt()
+    private val аByte = 'а'.toInt()
 
     override fun decode(string: String) = transform(string, -shift)
 
@@ -15,13 +13,13 @@ class CaesarCipher private constructor(private val shift: Int, private val alpha
     private fun transform(string: String, shift: Int) = StringBuilder().apply {
         for (c in string) {
             val ch = if (c in 'a'..'z') {
-                ((c.toInt() + shift - AByte) % alphabetLength + AByte).toChar()
+                ((c.toInt() + shift - aByte) % 26 + aByte).toChar()
             } else if (c in 'A'..'Z') {
-                ((c.toInt() + shift - aByte) % alphabetLength + aByte).toChar()
+                ((c.toInt() + shift - AByte) % 26 + AByte).toChar()
             } else if (c in 'А'..'Я') {
-                ((c.toInt() + shift - АByte) % alphabetLength + АByte).toChar()
+                ((c.toInt() + shift - АByte) % 33 + АByte).toChar()
             } else if (c in 'а'..'я') {
-                ((c.toInt() + shift - аByte) % alphabetLength + аByte).toChar()
+                ((c.toInt() + shift - аByte) % 33 + аByte).toChar()
             } else {
                 c
             }
@@ -39,7 +37,7 @@ class CaesarCipher private constructor(private val shift: Int, private val alpha
         override fun build(parameters: Map<String, Any>): CaesarCipher {
             val shift = (parameters["shift"] as? Int?)
                 ?: throw IllegalAccessException("`shift` parameter is required and should be int")
-            return CaesarCipher(shift, alphabetLength)
+            return CaesarCipher(shift)
         }
 
         override fun getParameters(): List<Cipher.Parameter> {
