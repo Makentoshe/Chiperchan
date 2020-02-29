@@ -21,8 +21,8 @@ class ParameterUi(private val root: ViewGroup?) {
 
     private fun createViewString(context: Context, parameter: Cipher.Parameter): TextInputLayout {
         val view = LayoutInflater.from(context).inflate(R.layout.parameter_string, root, false) as TextInputLayout
-        view.id = parameter.viewId
         view.hint = parameter.displayName
+        view.tag = parameter.name
         return view
     }
 
@@ -36,7 +36,7 @@ class ParameterUi(private val root: ViewGroup?) {
     private fun createViewBool(context: Context, parameter: Cipher.Parameter): View {
         val view = LayoutInflater.from(context).inflate(R.layout.parameter_boolean, root, false) as ViewGroup
         view.children.filterIsInstance<TextView>().first().text = parameter.displayName
-        view.id = parameter.viewId
+        view.tag = parameter.name
         return view
     }
 }

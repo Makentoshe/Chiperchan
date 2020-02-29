@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.core.view.children
 import androidx.core.widget.addTextChangedListener
@@ -56,31 +57,57 @@ class CipherFragment : Fragment() {
             is Action.Decode -> decodeButton.performClick()
         }
 
-        val container = view.findViewById<ViewGroup>(R.id.cipher_fragment_container)
+        generateParametersUi(view)
+
+        inputLayout?.editText?.addTextChangedListener {
+            onTextChanged(it.toString() ?: "")
+        }
+    }
+
+    private fun generateParametersUi(root: View) {
+        val container = root.findViewById<ViewGroup>(R.id.cipher_fragment_container)
         val parameterUi = ParameterUi(container)
         val parameters = cipherFactory.getParameters()
         parameters.forEach { parameter ->
             parameterUi.createView(requireContext(), parameter).also(container::addView)
         }
+    }
 
-        inputLayout?.editText?.addTextChangedListener {
-            val sas = parameters.map { parameter ->
-                val view = container.children.find { it.id == parameter.viewId }
-                when (parameter.spec.type) {
-                    Cipher.Type.Int -> {
-                        parameter.name to (view as TextInputLayout).editText?.text?.toString()?.toInt()
-                    }
-                    Cipher.Type.String -> {
-                        parameter.name to (view as TextInputLayout).editText?.text?.toString()
-                    }
-                    Cipher.Type.Boolean -> {
-                        parameter.name to "null"
-                    }
+    private fun onTextChanged(string: String) {
+        val parameters = extractParametersValues()
+        val cipher = cipherFactory.build(parameters)
+        when (action) {
+            Action.Encode -> cipher.encode(string).also(::displayOutputText)
+            Action.Decode -> cipher.decode(string).also(::displayOutputText)
+        }
+    }
+
+    private fun extractParametersValues(): Map<String, Any> {
+        val root = view ?: return emptyMap()
+
+        val parameters = cipherFactory.getParameters()
+        val container = root.findViewById<ViewGroup>(R.id.cipher_fragment_container)
+
+        return parameters.zip(container.children.toList()).map { (parameter, view) ->
+            when (parameter.spec.type) {
+                Cipher.Type.Int -> {
+                    parameter.name to (view as TextInputLayout).editText?.text?.toString()?.toIntOrNull()!!
+                }
+                Cipher.Type.String -> {
+                    parameter.name to (view as TextInputLayout).editText?.text?.toString()!!
+                }
+                Cipher.Type.Boolean -> {
+                    val value = (view as ViewGroup).findViewById<CheckBox>(R.id.checkBox).isChecked
+                    parameter.name to value
                 }
             }
+        }.toMap()
+    }
 
-            println(sas)
-        }
+    private fun displayOutputText(string: String) {
+        val view = view ?: return
+        val textview = view.findViewById<TextInputLayout>(R.id.cipher_fragment_output)
+        textview.editText?.setText(string)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
