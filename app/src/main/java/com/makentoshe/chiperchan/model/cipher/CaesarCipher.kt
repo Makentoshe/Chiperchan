@@ -1,6 +1,7 @@
-package com.makentoshe.chiperchan.model
+package com.makentoshe.chiperchan.model.cipher
 
-class CaesarCipher private constructor(private val shift: Int) : Cipher {
+class CaesarCipher private constructor(private val shift: Int) :
+    Cipher {
     private val AByte = 'A'.toInt()
     private val aByte = 'a'.toInt()
     private val АByte = 'А'.toInt()

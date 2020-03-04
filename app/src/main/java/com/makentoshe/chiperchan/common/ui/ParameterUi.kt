@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.core.view.children
 import com.google.android.material.textfield.TextInputLayout
 import com.makentoshe.chiperchan.R
-import com.makentoshe.chiperchan.model.Cipher
+import com.makentoshe.chiperchan.model.cipher.Cipher
 
 class ParameterUi(private val root: ViewGroup?) {
 

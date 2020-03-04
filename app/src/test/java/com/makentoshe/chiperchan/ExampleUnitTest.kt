@@ -1,6 +1,6 @@
 package com.makentoshe.chiperchan
 
-import com.makentoshe.chiperchan.model.CaesarCipher
+import com.makentoshe.chiperchan.model.cipher.CaesarCipher
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

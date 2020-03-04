@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputLayout
 import com.makentoshe.chiperchan.R
 import com.makentoshe.chiperchan.common.ui.ParameterUi
-import com.makentoshe.chiperchan.model.Cipher
+import com.makentoshe.chiperchan.model.cipher.Cipher
 import com.makentoshe.chiperchan.model.cipher.Action
 import com.makentoshe.chiperchan.ui.cipher.CipherFragmentUi
 import toothpick.ktp.delegate.inject

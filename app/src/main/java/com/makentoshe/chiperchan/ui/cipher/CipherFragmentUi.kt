@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import com.makentoshe.chiperchan.R
-import com.makentoshe.chiperchan.model.Cipher
+import com.makentoshe.chiperchan.model.cipher.Cipher
 
 class CipherFragmentUi(private val factory: Cipher.Factory) {
 

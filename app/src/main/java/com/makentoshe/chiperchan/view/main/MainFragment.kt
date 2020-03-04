@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.fragment.app.Fragment
 import com.makentoshe.chiperchan.R
-import com.makentoshe.chiperchan.model.Cipher
+import com.makentoshe.chiperchan.model.cipher.Cipher
 import com.makentoshe.chiperchan.model.cipher.CipherScreen
 import com.makentoshe.chiperchan.ui.main.MainFragmentUi
 import ru.terrakok.cicerone.Router

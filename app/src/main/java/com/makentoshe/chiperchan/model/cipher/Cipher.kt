@@ -1,4 +1,4 @@
-package com.makentoshe.chiperchan.model
+package com.makentoshe.chiperchan.model.cipher
 
 import android.view.View
 
@@ -23,3 +23,4 @@ interface Cipher {
         Boolean
     }
 }
+

@@ -1,7 +1,7 @@
 package com.makentoshe.chiperchan.di.cipher
 
 import com.makentoshe.chiperchan.di.common.ApplicationScope
-import com.makentoshe.chiperchan.model.Cipher
+import com.makentoshe.chiperchan.model.cipher.Cipher
 import com.makentoshe.chiperchan.view.cipher.CipherFragment
 import toothpick.Toothpick
 import toothpick.config.Module
