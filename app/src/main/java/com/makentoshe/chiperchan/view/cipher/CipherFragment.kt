@@ -95,7 +95,15 @@ class CipherFragment : Fragment() {
         val parameterUi = ParameterUi(container)
         val parameters = cipherFactory.getParameters()
         parameters.forEach { parameter ->
-            parameterUi.createView(requireContext(), parameter).also(container::addView)
+            parameterUi.createView(requireContext(), parameter) { onParameterChanged() }.also(container::addView)
+        }
+    }
+
+    private fun onParameterChanged() {
+        val view = requireView().findViewById<TextInputLayout>(R.id.cipher_fragment_input)
+        val string = view?.editText?.text?.toString()
+        if (string != null && string.isNotBlank()) {
+            onTextChanged(string)
         }
     }
 
