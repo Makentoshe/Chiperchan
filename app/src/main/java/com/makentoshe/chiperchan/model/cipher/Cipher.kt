@@ -14,7 +14,7 @@ interface Cipher {
         val title: String
     }
 
-    class Parameter(val name: String, val displayName: String, val spec: Spec, val viewId: Int = View.generateViewId())
+    class Parameter(val name: String, val displayName: String, val spec: Spec)
     class Spec(val type: Type)
 
     enum class Type {
