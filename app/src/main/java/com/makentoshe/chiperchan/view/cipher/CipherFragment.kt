@@ -82,12 +82,14 @@ class CipherFragment : Fragment() {
         generateParametersUi(view)
 
         inputLayout?.editText?.addTextChangedListener {
-            onTextChanged(it.toString() ?: "")
+            onTextChanged(it?.toString() ?: "")
         }
 
         inputLayout.setEndIconOnClickListener {
             inputLayout.editText?.setText("")
         }
+
+        onLoadParamsInstanceState(savedInstanceState ?: return)
     }
 
     private fun generateParametersUi(root: View) {
@@ -146,6 +148,72 @@ class CipherFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putSerializable(Action::class.java.simpleName, action)
+        saveParamsInstanceState(outState)
+    }
+
+    private fun saveParamsInstanceState(outState: Bundle) {
+        cipherFactory.getParameters().forEach { parameter ->
+            saveSingleParamInstanceState(outState, parameter)
+        }
+    }
+
+    private fun saveSingleParamInstanceState(outState: Bundle, parameter: Cipher.Parameter) {
+        when (parameter.spec.type) {
+            Cipher.Type.Boolean -> saveBooleanParamInstanceState(outState, parameter)
+            Cipher.Type.String -> saveStringParamInstanceState(outState, parameter)
+            Cipher.Type.Int -> saveIntegerParamInstanceState(outState, parameter)
+        }
+    }
+
+    private fun saveBooleanParamInstanceState(outState: Bundle, parameter: Cipher.Parameter) {
+        val view = requireView().findViewWithTag<View>(parameter.name)
+        val value = (view as ViewGroup).children.filterIsInstance<CheckBox>().first().isChecked
+        outState.putBoolean(parameter.name, value)
+    }
+
+    private fun saveStringParamInstanceState(outState: Bundle, parameter: Cipher.Parameter) {
+        val view = requireView().findViewWithTag<View>(parameter.name)
+        val value = (view as TextInputLayout).editText?.text?.toString() ?: return
+        outState.putString(parameter.name, value)
+    }
+
+    private fun saveIntegerParamInstanceState(outState: Bundle, parameter: Cipher.Parameter) {
+        val view = requireView().findViewWithTag<View>(parameter.name)
+        val value = (view as TextInputLayout).editText?.text?.toString()?.toIntOrNull() ?: return
+        outState.putInt(parameter.name, value)
+    }
+
+    private fun onLoadParamsInstanceState(savedInstanceState: Bundle) {
+        cipherFactory.getParameters().forEach { parameter ->
+            loadSingleParamInstanceState(savedInstanceState, parameter)
+        }
+    }
+
+    private fun loadSingleParamInstanceState(savedInstanceState: Bundle, parameter: Cipher.Parameter) {
+        when (parameter.spec.type) {
+            Cipher.Type.Boolean -> loadBooleanParamInstanceState(savedInstanceState, parameter)
+            Cipher.Type.String -> loadStringParamInstanceState(savedInstanceState, parameter)
+            Cipher.Type.Int -> loadIntegerParamInstanceState(savedInstanceState, parameter)
+        }
+    }
+
+    private fun loadBooleanParamInstanceState(savedInstanceState: Bundle, parameter: Cipher.Parameter) {
+        if (!savedInstanceState.containsKey(parameter.name)) return
+        val view = requireView().findViewWithTag<View>(parameter.name)
+        val checkBox = (view as ViewGroup).children.filterIsInstance<CheckBox>().first()
+        checkBox.isChecked = savedInstanceState.getBoolean(parameter.name)
+    }
+
+    private fun loadStringParamInstanceState(savedInstanceState: Bundle, parameter: Cipher.Parameter) {
+        if (!savedInstanceState.containsKey(parameter.name)) return
+        val view = requireView().findViewWithTag<TextInputLayout>(parameter.name)
+        view.editText?.setText(savedInstanceState.getString(parameter.name))
+    }
+
+    private fun loadIntegerParamInstanceState(savedInstanceState: Bundle, parameter: Cipher.Parameter) {
+        if (!savedInstanceState.containsKey(parameter.name)) return
+        val view = requireView().findViewWithTag<TextInputLayout>(parameter.name)
+        view.editText?.setText(savedInstanceState.getInt(parameter.name).toString())
     }
 
     class Factory {

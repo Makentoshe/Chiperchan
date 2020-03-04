@@ -8,7 +8,5 @@ import com.makentoshe.chiperchan.model.cipher.Cipher
 
 class CipherFragmentUi(private val factory: Cipher.Factory) {
 
-    fun create(context: Context): View = LayoutInflater.from(context).inflate(R.layout.cipher_fragment, null, false).also { view ->
-        val params = factory.getParameters()
-    }
+    fun create(context: Context): View = LayoutInflater.from(context).inflate(R.layout.cipher_fragment, null, false)
 }

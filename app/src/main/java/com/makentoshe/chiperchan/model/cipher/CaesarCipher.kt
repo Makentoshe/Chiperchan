@@ -1,11 +1,10 @@
 package com.makentoshe.chiperchan.model.cipher
 
-class CaesarCipher private constructor(private val shift: Int) :
-    Cipher {
-    private val AByte = 'A'.toInt()
-    private val aByte = 'a'.toInt()
-    private val АByte = 'А'.toInt()
-    private val аByte = 'а'.toInt()
+class CaesarCipher(private val shift: Int) : Cipher {
+    private val AByte_eng = 'A'.toInt()
+    private val aByte_eng = 'a'.toInt()
+    private val AByte_ru = 'А'.toInt()
+    private val aByte_ru = 'а'.toInt()
 
     override fun decode(string: String) = transform(string, -shift)
 
@@ -13,16 +12,22 @@ class CaesarCipher private constructor(private val shift: Int) :
 
     private fun transform(string: String, shift: Int) = StringBuilder().apply {
         for (c in string) {
-            val ch = if (c in 'a'..'z') {
-                ((c.toInt() + shift - aByte) % 26 + aByte).toChar()
-            } else if (c in 'A'..'Z') {
-                ((c.toInt() + shift - AByte) % 26 + AByte).toChar()
-            } else if (c in 'А'..'Я') {
-                ((c.toInt() + shift - АByte) % 33 + АByte).toChar()
-            } else if (c in 'а'..'я') {
-                ((c.toInt() + shift - аByte) % 33 + аByte).toChar()
-            } else {
-                c
+            val ch = when (c) {
+                in 'a'..'z' -> {
+                    ((c.toInt() + shift - aByte_eng) % 26 + aByte_eng).toChar()
+                }
+                in 'A'..'Z' -> {
+                    ((c.toInt() + shift - AByte_eng) % 26 + AByte_eng).toChar()
+                }
+                in 'А'..'Я' -> {
+                    ((c.toInt() + shift - AByte_ru) % 32 + AByte_ru).toChar()
+                }
+                in 'а'..'я' -> {
+                    ((c.toInt() + shift - aByte_ru) % 32 + aByte_ru).toChar()
+                }
+                else -> {
+                    c
+                }
             }
 
             append(ch)
@@ -32,8 +37,6 @@ class CaesarCipher private constructor(private val shift: Int) :
     class Factory : Cipher.Factory {
 
         override val title = "Caesar cipher"
-
-        private val alphabetLength: Int = 26
 
         override fun build(parameters: Map<String, Any>): CaesarCipher {
             val shift = (parameters["shift"] as? Int?)
