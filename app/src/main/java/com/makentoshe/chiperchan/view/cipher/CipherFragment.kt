@@ -13,15 +13,17 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputLayout
 import com.makentoshe.chiperchan.R
 import com.makentoshe.chiperchan.common.ui.ParameterUi
-import com.makentoshe.chiperchan.model.cipher.Cipher
 import com.makentoshe.chiperchan.model.cipher.Action
+import com.makentoshe.chiperchan.model.cipher.Cipher
 import com.makentoshe.chiperchan.ui.cipher.CipherFragmentUi
+import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
 
 class CipherFragment : Fragment() {
 
     val arguments = Arguments(this)
     private val cipherFactory by inject<Cipher.Factory>()
+    private val navigator by inject<Navigator>()
     private var action: Action = Action.Encode
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +37,11 @@ class CipherFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        view.findViewById<Toolbar>(R.id.cipher_fragment_toolbar).title = cipherFactory.title
+        val toolbar = view.findViewById<Toolbar>(R.id.cipher_fragment_toolbar)
+        toolbar.title = cipherFactory.title
+        toolbar.setNavigationOnClickListener {
+            navigator.back()
+        }
 
         val encodeButton = view.findViewById<Button>(R.id.cipher_fragment_encode)
         val decodeButton = view.findViewById<Button>(R.id.cipher_fragment_decode)
@@ -161,5 +167,9 @@ class CipherFragment : Fragment() {
         companion object {
             private const val TITLE = "Title"
         }
+    }
+
+    class Navigator(private val router: Router) {
+        fun back() = router.exit()
     }
 }
