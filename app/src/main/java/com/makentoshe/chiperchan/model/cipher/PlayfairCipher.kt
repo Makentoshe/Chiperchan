@@ -1,11 +1,14 @@
 package com.makentoshe.chiperchan.model.cipher
 
-import java.util.*
-
 // For more info see https://rosettacode.org/wiki/Playfair_cipher#Java
-class PlayfairCipher(private val key: String) : Cipher {
+class PlayfairCipher(key: String) : Cipher {
     private val charTable = Array(5) { CharArray(5) }
     private val positions = arrayOfNulls<Pair<Int, Int>>(26)
+
+    private val AByte_eng = 'A'.toInt()
+    private val aByte_eng = 'a'.toInt()
+    private val AByte_ru = 'А'.toInt()
+    private val aByte_ru = 'а'.toInt()
 
     init {
         val s: String =
@@ -25,7 +28,7 @@ class PlayfairCipher(private val key: String) : Cipher {
     }
 
     private fun prepareText(s: String): String {
-        return s.toUpperCase(Locale.ROOT).replace("[^A-Z]".toRegex(), "").replace("Q", "")
+        return s.replace("Q", "")
     }
 
     override fun encode(string: String): String {
@@ -40,7 +43,7 @@ class PlayfairCipher(private val key: String) : Cipher {
     }
 
     override fun decode(string: String): String {
-        return codec(StringBuilder(string), 4)
+        return codec(StringBuilder(prepareText(string)), 4)
     }
 
     private fun codec(text: StringBuilder, direction: Int): String {
@@ -49,10 +52,10 @@ class PlayfairCipher(private val key: String) : Cipher {
         while (i < len) {
             val a = text[i]
             val b = text[i + 1]
-            var row1: Int = positions[a - 'A']!!.second
-            var row2: Int = positions[b - 'A']!!.second
-            var col1: Int = positions[a - 'A']!!.first
-            var col2: Int = positions[b - 'A']!!.first
+            var row1: Int = positions[index(a)]!!.second
+            var row2: Int = positions[index(b)]!!.second
+            var col1: Int = positions[index(a)]!!.first
+            var col2: Int = positions[index(b)]!!.first
             if (row1 == row2) {
                 col1 = (col1 + direction) % 5
                 col2 = (col2 + direction) % 5
@@ -69,6 +72,26 @@ class PlayfairCipher(private val key: String) : Cipher {
             i += 2
         }
         return text.toString()
+    }
+
+    private fun index(c: Char): Int {
+        return when (c) {
+            in 'a'..'z' -> {
+                c.toInt() - aByte_eng
+            }
+            in 'A'..'Z' -> {
+                c.toInt() - AByte_eng
+            }
+            in 'А'..'Я' -> {
+                c.toInt() - AByte_ru
+            }
+            in 'а'..'я' -> {
+                c.toInt() - aByte_ru
+            }
+            else -> {
+                0
+            }
+        }
     }
 
     class Factory : Cipher.Factory {
