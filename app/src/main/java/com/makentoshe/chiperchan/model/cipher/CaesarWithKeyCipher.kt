@@ -62,7 +62,7 @@ class CaesarWithKeyCipher(private val key: String) : Cipher {
 
     class Factory : Cipher.Factory {
 
-        override val title = "Caesar cipher"
+        override val title = "Caesar cipher with key"
 
         override fun build(parameters: Map<String, Any>): CaesarWithKeyCipher {
             val key = (parameters["key"] as? String?)
