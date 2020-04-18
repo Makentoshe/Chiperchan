@@ -1,7 +1,5 @@
 package com.makentoshe.chiperchan.model.cipher
 
-import android.view.View
-
 interface Cipher {
 
     fun encode(string: String): String
@@ -20,7 +18,8 @@ interface Cipher {
     enum class Type {
         String,
         Int,
-        Boolean
+        Boolean,
+        Plain
     }
 }
 

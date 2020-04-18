@@ -19,6 +19,7 @@ class ParameterUi(private val root: ViewGroup?) {
         Cipher.Type.String -> createViewString(context, parameter, action)
         Cipher.Type.Int -> createViewInt(context, parameter, action)
         Cipher.Type.Boolean -> createViewBool(context, parameter, action)
+        Cipher.Type.Plain -> createViewPlain(context, parameter, action)
     }
 
     private fun createViewString(context: Context, parameter: Cipher.Parameter, action: () -> Unit): TextInputLayout {
@@ -42,6 +43,13 @@ class ParameterUi(private val root: ViewGroup?) {
         val view = LayoutInflater.from(context).inflate(R.layout.parameter_boolean, root, false) as ViewGroup
         view.children.filterIsInstance<TextView>().first().text = parameter.displayName
         view.children.filterIsInstance<CheckBox>().first().setOnCheckedChangeListener { _, _ -> action() }
+        view.tag = parameter.name
+        return view
+    }
+
+    private fun createViewPlain(context: Context, parameter: Cipher.Parameter, action: () -> Unit): View {
+        val view = LayoutInflater.from(context).inflate(R.layout.parameter_plain, root, false) as TextInputLayout
+        view.hint = parameter.displayName
         view.tag = parameter.name
         return view
     }

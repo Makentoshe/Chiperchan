@@ -144,6 +144,9 @@ class CipherFragment : Fragment() {
                     val value = (view as ViewGroup).findViewById<CheckBox>(R.id.checkBox).isChecked
                     parameter.name to value
                 }
+                Cipher.Type.Plain -> {
+                    parameter.name to ((view as TextInputLayout).editText?.text?.toString() ?: "")
+                }
             }
         }.toMap()
     }
@@ -180,6 +183,7 @@ class CipherFragment : Fragment() {
             Cipher.Type.Boolean -> saveBooleanParamInstanceState(outState, parameter)
             Cipher.Type.String -> saveStringParamInstanceState(outState, parameter)
             Cipher.Type.Int -> saveIntegerParamInstanceState(outState, parameter)
+            Cipher.Type.Plain -> saveStringParamInstanceState(outState, parameter)
         }
     }
 
@@ -212,6 +216,7 @@ class CipherFragment : Fragment() {
             Cipher.Type.Boolean -> loadBooleanParamInstanceState(savedInstanceState, parameter)
             Cipher.Type.String -> loadStringParamInstanceState(savedInstanceState, parameter)
             Cipher.Type.Int -> loadIntegerParamInstanceState(savedInstanceState, parameter)
+            Cipher.Type.Plain -> loadSingleParamInstanceState(savedInstanceState, parameter)
         }
     }
 

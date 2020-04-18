@@ -31,6 +31,11 @@ class StubCipher : Cipher {
                 name = "BooleanParameter",
                 displayName = "Boolean Parameter",
                 spec = Cipher.Spec(Cipher.Type.Boolean)
+            ),
+            Cipher.Parameter(
+                name = "PlainParameter",
+                displayName = "Plain text parameter",
+                spec = Cipher.Spec(Cipher.Type.Plain)
             )
         )
     }
