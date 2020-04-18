@@ -14,16 +14,16 @@ class CaesarCipher(private val shift: Int) : Cipher {
         for (c in string) {
             val ch = when (c) {
                 in 'a'..'z' -> {
-                    ((c.toInt() + shift - aByte_eng) % 26 + aByte_eng).toChar()
+                    ((c.toInt() + shift - aByte_eng + 26) % 26 + aByte_eng).toChar()
                 }
                 in 'A'..'Z' -> {
-                    ((c.toInt() + shift - AByte_eng) % 26 + AByte_eng).toChar()
+                    ((c.toInt() + shift - AByte_eng + 26) % 26 + AByte_eng).toChar()
                 }
                 in 'А'..'Я' -> {
-                    ((c.toInt() + shift - AByte_ru) % 32 + AByte_ru).toChar()
+                    ((c.toInt() + shift - AByte_ru + 32) % 32 + AByte_ru).toChar()
                 }
                 in 'а'..'я' -> {
-                    ((c.toInt() + shift - aByte_ru) % 32 + aByte_ru).toChar()
+                    ((c.toInt() + shift - aByte_ru + 32) % 32 + aByte_ru).toChar()
                 }
                 else -> {
                     c
