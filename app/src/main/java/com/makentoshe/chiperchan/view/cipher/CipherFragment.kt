@@ -1,15 +1,18 @@
 package com.makentoshe.chiperchan.view.cipher
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.CheckBox
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.children
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.makentoshe.chiperchan.R
 import com.makentoshe.chiperchan.common.ui.ParameterUi
@@ -18,6 +21,7 @@ import com.makentoshe.chiperchan.model.cipher.Cipher
 import com.makentoshe.chiperchan.ui.cipher.CipherFragmentUi
 import ru.terrakok.cicerone.Router
 import toothpick.ktp.delegate.inject
+
 
 class CipherFragment : Fragment() {
 
@@ -112,9 +116,13 @@ class CipherFragment : Fragment() {
     private fun onTextChanged(string: String) {
         val parameters = extractParametersValues()
         val cipher = cipherFactory.build(parameters)
-        when (action) {
-            Action.Encode -> cipher.encode(string).also(::displayOutputText)
-            Action.Decode -> cipher.decode(string).also(::displayOutputText)
+        try {
+            when (action) {
+                Action.Encode -> cipher.encode(string).also(::displayOutputText)
+                Action.Decode -> cipher.decode(string).also(::displayOutputText)
+            }
+        } catch (ae: ArithmeticException) {
+            displayErrorOutput(ae.localizedMessage ?: ae.toString())
         }
     }
 
@@ -144,6 +152,16 @@ class CipherFragment : Fragment() {
         val view = view ?: return
         val textview = view.findViewById<TextInputLayout>(R.id.cipher_fragment_output)
         textview.editText?.setText(string)
+    }
+
+    private fun displayErrorOutput(string: String) {
+        closeSoftKeyboard()
+        Snackbar.make(view ?: activity!!.window.decorView, string, Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun closeSoftKeyboard() {
+        val manager = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        manager.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
