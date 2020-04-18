@@ -1,10 +1,12 @@
 package com.makentoshe.chiperchan.model.cipher
 
-class CaesarWithKeyCipher(private val key: String) : Cipher {
+class CaesarWithKeyCipher(key: String) : Cipher {
     private val AByte_eng = 'A'.toInt()
     private val aByte_eng = 'a'.toInt()
     private val AByte_ru = 'А'.toInt()
     private val aByte_ru = 'а'.toInt()
+
+    private val key = if (key.isEmpty()) "a" else key
 
     override fun decode(string: String): String = StringBuilder().apply {
         for ((index, c) in string.withIndex()) {
