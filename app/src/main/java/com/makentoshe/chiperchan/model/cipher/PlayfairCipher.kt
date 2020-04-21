@@ -12,7 +12,7 @@ class PlayfairCipher(key: String) : Cipher {
 
     init {
         val s: String =
-            prepareText(key + "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+            prepareText(key.toUpperCase() + "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
         val len = s.length
         var i = 0
         var k = 0
@@ -35,8 +35,11 @@ class PlayfairCipher(key: String) : Cipher {
         val sb = StringBuilder(string)
         var i = 0
         while (i < sb.length) {
-            if (i == sb.length - 1) sb.append(if (sb.length % 2 == 1) 'X' else "") else if (sb[i] == sb[i + 1]
-            ) sb.insert(i + 1, 'X')
+            if (i == sb.length - 1) {
+                sb.append(if (sb.length % 2 == 1) 'X' else "")
+            } else if (sb[i] == sb[i + 1]) {
+                sb.insert(i + 1, 'X')
+            }
             i += 2
         }
         return codec(sb, 1)
