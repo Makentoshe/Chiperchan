@@ -1,6 +1,8 @@
 package com.makentoshe.chiperchan
 
 import android.app.Application
+import android.widget.Toast
+import com.makentoshe.chiperchan.common.SnackbarSoutBroadcastReceiver
 import com.makentoshe.chiperchan.di.InjectionActivityLifecycleCallbacks
 import com.makentoshe.chiperchan.di.InjectionFragmentLifecycleCallbacks
 import com.makentoshe.chiperchan.di.common.ApplicationModule
@@ -10,7 +12,11 @@ import ru.terrakok.cicerone.Cicerone
 import toothpick.Toothpick
 import toothpick.configuration.Configuration
 
-class Chipherchan : Application() {
+class Chipherchan : Application(), ChipherchanSout {
+
+    init {
+        sout = this
+    }
 
     private val cicerone = Cicerone.create()
 
@@ -34,6 +40,22 @@ class Chipherchan : Application() {
         val navigationModule = NavigationModule(cicerone)
         val applicationModule = ApplicationModule(applicationContext)
         Toothpick.openScopes(ApplicationScope::class.java).installModules(navigationModule, applicationModule)
+    }
+
+    companion object {
+        lateinit var sout: ChipherchanSout
+    }
+
+    override fun toast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun snackbar(message: String) {
+        SnackbarSoutBroadcastReceiver.sendBroadcast(this, message)
+    }
+
+    override fun ui(message: String) {
+        TODO("Not implemented")
     }
 
 }

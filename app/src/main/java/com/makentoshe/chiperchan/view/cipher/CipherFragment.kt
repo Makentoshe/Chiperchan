@@ -14,6 +14,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import com.makentoshe.chiperchan.Chipherchan
 import com.makentoshe.chiperchan.R
 import com.makentoshe.chiperchan.common.ui.ParameterUi
 import com.makentoshe.chiperchan.model.cipher.Action
@@ -76,6 +77,8 @@ class CipherFragment : Fragment() {
 
             outputLayout.editText?.setText(input)
             inputLayout.editText?.setText(output)
+
+            Chipherchan.sout.snackbar("SAS ASA ANUS PSA")
         }
 
         when (action) {
