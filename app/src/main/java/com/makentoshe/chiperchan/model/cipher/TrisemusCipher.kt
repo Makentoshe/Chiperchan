@@ -50,4 +50,25 @@ class TrisemusCipher(
             append(charTable[x][pos.second])
         }
     }.toString()
+
+    class Factory : Cipher.Factory {
+
+        override val title = "Trisemus cipher"
+
+        override fun build(parameters: Map<String, Any>): TrisemusCipher {
+            val key = (parameters["key"] as? String?)
+                ?: throw IllegalAccessException("`key` parameter is required and should be string")
+            return TrisemusCipher(key)
+        }
+
+        override fun getParameters(): List<Cipher.Parameter> {
+            return listOf(
+                Cipher.Parameter(
+                    name = "key",
+                    displayName = "Key",
+                    spec = Cipher.Spec(Cipher.Type.String)
+                )
+            )
+        }
+    }
 }

@@ -11,7 +11,9 @@ class ApplicationModule(context: Context) : Module() {
         CaesarCipher.Factory(),
         StubCipher.Factory(),
         CaesarWithKeyCipher.Factory(),
-        PlayfairCipher.Factory()
+        PlayfairCipher.Factory(),
+        GronsfeldCipher.Factory(),
+        TrisemusCipher.Factory()
     )
 
     init {
