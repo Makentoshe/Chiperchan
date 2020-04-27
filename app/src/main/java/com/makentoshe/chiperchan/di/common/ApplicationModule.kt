@@ -13,7 +13,8 @@ class ApplicationModule(context: Context) : Module() {
         CaesarWithKeyCipher.Factory(),
         PlayfairCipher.Factory(),
         GronsfeldCipher.Factory(),
-        TrisemusCipher.Factory()
+        TrisemusCipher.Factory(),
+        MagicSquareCipher.Factory()
     )
 
     init {
