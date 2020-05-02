@@ -1,6 +1,6 @@
 package com.makentoshe.chiperchan.model.cipher
 
-class AfinnCipher(private val a: Int, private val b: Int): Cipher {
+class AffineCipher(private val a: Int, private val b: Int) : Cipher {
     private val AByte_eng = 'A'.toInt()
     private val aByte_eng = 'a'.toInt()
     private val AByte_ru = 'А'.toInt()
@@ -70,4 +70,32 @@ class AfinnCipher(private val a: Int, private val b: Int): Cipher {
             append(ch)
         }
     }.toString()
+
+    class Factory : Cipher.Factory {
+
+        override val title = "Affine cipher"
+
+        override fun build(parameters: Map<String, Any>): AffineCipher {
+            val a = (parameters["a"] as? Int?)
+                ?: throw IllegalAccessException("`a` parameter is required and should be int")
+            val b = (parameters["b"] as? Int?)
+                ?: throw IllegalAccessException("`b` parameter is required and should be int")
+            return AffineCipher(a, b)
+        }
+
+        override fun getParameters(): List<Cipher.Parameter> {
+            return listOf(
+                Cipher.Parameter(
+                    name = "a",
+                    displayName = "A",
+                    spec = Cipher.Spec(Cipher.Type.Int)
+                ),
+                Cipher.Parameter(
+                    name = "b",
+                    displayName = "B",
+                    spec = Cipher.Spec(Cipher.Type.Int)
+                )
+            )
+        }
+    }
 }

@@ -14,7 +14,8 @@ class ApplicationModule(context: Context) : Module() {
         PlayfairCipher.Factory(),
         GronsfeldCipher.Factory(),
         TrisemusCipher.Factory(),
-        MagicSquareCipher.Factory()
+        MagicSquareCipher.Factory(),
+        AffineCipher.Factory()
     )
 
     init {
