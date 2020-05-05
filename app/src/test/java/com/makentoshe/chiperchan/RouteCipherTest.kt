@@ -1,6 +1,5 @@
 package com.makentoshe.chiperchan
 
-import com.makentoshe.chiperchan.model.cipher.AffineCipher
 import com.makentoshe.chiperchan.model.cipher.RouteCipher
 import junit.framework.Assert.assertEquals
 import org.junit.Test
