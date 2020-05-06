@@ -17,7 +17,8 @@ class ApplicationModule(context: Context) : Module() {
         MagicSquareCipher.Factory(),
         AffineCipher.Factory(),
         RouteCipher.Factory(),
-        TranspositionWithKeyCipher.Factory()
+        TranspositionWithKeyCipher.Factory(),
+        DoubleTranspositionCipher.Factory()
     )
 
     init {
