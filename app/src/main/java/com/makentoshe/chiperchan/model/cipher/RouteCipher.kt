@@ -4,11 +4,11 @@ import kotlin.math.ceil
 
 class RouteCipher(private val key: Int) : Cipher {
 
-    override fun decode(string: String) = transformD(string, key)
+    override fun decode(string: String) = transformD(string)
 
-    override fun encode(string: String) = transformE(string, key)
+    override fun encode(string: String) = transformE(string)
 
-    private fun transformD(str: String, key: Int) = StringBuilder().apply {
+    private fun transformD(str: String) = StringBuilder().apply {
         val n = key
         val s = str.length
         val k = s/n
@@ -20,16 +20,14 @@ class RouteCipher(private val key: Int) : Cipher {
                 f++
             }
         }
-        val arr2: Array<CharArray> = Array(k) {CharArray(n) {'0'} }
         for(j in 0 until k){
             for(i in 0 until n){
-                arr2[j][i] = arr[i][j]
-                append("${arr2[j][i]}")
+               append(arr[i][j])
             }
         }
     }.toString()
 
-    private fun transformE(str: String, key: Int) = StringBuilder().apply{
+    private fun transformE(str: String) = StringBuilder().apply{
         val k = key.toDouble()
         val s = str.length.toDouble()
         val n = ceil(s / k)
@@ -45,11 +43,9 @@ class RouteCipher(private val key: Int) : Cipher {
                 f++
             }
         }
-        val arr2: Array<CharArray> = Array(k.toInt()) {CharArray(n.toInt()) {'0'} }
         for(j in 0 until k.toInt()){
             for(i in 0 until n.toInt()){
-                arr2[j][i] = arr[i][j]
-                append("${arr2[j][i]}")
+                append(arr[j][i].toString())
             }
         }
     }.toString()

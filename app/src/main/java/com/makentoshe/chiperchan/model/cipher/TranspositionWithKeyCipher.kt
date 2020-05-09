@@ -4,9 +4,9 @@ import kotlin.math.ceil
 
 class TranspositionWithKeyCipher(private val key: String) : Cipher {
 
-    override fun decode(string: String) = transformD(string, key)
+    override fun decode(string: String) = transformD(string)
 
-    override fun encode(string: String) = transformE(string, key)
+    override fun encode(string: String) = transformE(string)
 
     private fun keyNumber(key: String): String{
         var A: Array<Int> = Array(key.length, {0})
@@ -23,7 +23,7 @@ class TranspositionWithKeyCipher(private val key: String) : Cipher {
         }
         return A.joinToString("")
     }
-    private fun transformD(str: String, key: String) = StringBuilder().apply {
+    private fun transformD(str: String) = StringBuilder().apply {
         val k = keyNumber(key).length
         val s = str.length
         val n = s/k
@@ -55,7 +55,7 @@ class TranspositionWithKeyCipher(private val key: String) : Cipher {
         }
     }.toString()
 
-    private fun transformE(str: String, key: String) = StringBuilder().apply{
+    private fun transformE(str: String) = StringBuilder().apply{
         val k = keyNumber(key).length.toDouble()
         println(keyNumber(key))
         val s = str.length.toDouble()

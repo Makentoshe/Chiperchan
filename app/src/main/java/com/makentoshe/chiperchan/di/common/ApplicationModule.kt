@@ -18,7 +18,8 @@ class ApplicationModule(context: Context) : Module() {
         AffineCipher.Factory(),
         RouteCipher.Factory(),
         TranspositionWithKeyCipher.Factory(),
-        DoubleTranspositionCipher.Factory()
+        DoubleTranspositionCipher.Factory(),
+        KardanoCipher.Factory()
     )
 
     init {

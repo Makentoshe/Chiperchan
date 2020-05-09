@@ -4,9 +4,9 @@ import kotlin.math.ceil
 
 class DoubleTranspositionCipher(private val key1: String, private val key2: String) : Cipher {
 
-    override fun decode(string: String) = transformD(string, key1, key2)
+    override fun decode(string: String) = transformD(string)
 
-    override fun encode(string: String) = transformE(string, key1, key2)
+    override fun encode(string: String) = transformE(string)
 
     private fun keyNum(key: String): String{
         var A: Array<Int> = Array(key.length) {0}
@@ -23,7 +23,7 @@ class DoubleTranspositionCipher(private val key1: String, private val key2: Stri
         }
         return A.joinToString("")
     }
-    private fun transformD(str: String, key1: String, key2:String) = StringBuilder().apply {
+    private fun transformD(str: String) = StringBuilder().apply {
         val k1 = keyNum(key1).length
         val s = str.length
         val n = s/k1
@@ -64,7 +64,7 @@ class DoubleTranspositionCipher(private val key1: String, private val key2: Stri
         }
     }.toString()
 
-    private fun transformE(str: String, key1: String, key2: String) = StringBuilder().apply{
+    private fun transformE(str: String) = StringBuilder().apply{
         val k1 = keyNum(key1).length.toDouble()
         val s = str.length.toDouble()
         val n = ceil(s / k1)
