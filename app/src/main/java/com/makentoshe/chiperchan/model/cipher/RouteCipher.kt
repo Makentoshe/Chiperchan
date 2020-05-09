@@ -22,7 +22,7 @@ class RouteCipher(private val key: Int) : Cipher {
         }
         for(j in 0 until k){
             for(i in 0 until n){
-               append(arr[i][j])
+               append(arr[i][j].toString())
             }
         }
     }.toString()
@@ -45,7 +45,7 @@ class RouteCipher(private val key: Int) : Cipher {
         }
         for(j in 0 until k.toInt()){
             for(i in 0 until n.toInt()){
-                append(arr[j][i].toString())
+                append(arr[i][j].toString())
             }
         }
     }.toString()
