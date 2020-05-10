@@ -19,4 +19,18 @@ class TransposEasyTableCipherTest {
         val decoded = TransposEasyTableCipher(intArrayOf(3,2,1)).decode(encoded)
         Assert.assertEquals("abcdef", decoded)
     }
+    @Test
+    fun `should encode and decode 3`() {
+        val encoded = TransposEasyTableCipher(intArrayOf(2,3,1)).encode("abcdef")
+        Assert.assertEquals("bcaefd", encoded)
+        val decoded = TransposEasyTableCipher(intArrayOf(2,3,1)).decode(encoded)
+        Assert.assertEquals("abcdef", decoded)
+    }
+    @Test
+    fun `should encode and decode 4`() {
+        val encoded = TransposEasyTableCipher(intArrayOf(2,3,1)).encode("торопыжка")
+        Assert.assertEquals("ортпыокаж", encoded)
+        val decoded = TransposEasyTableCipher(intArrayOf(2,3,1)).decode(encoded)
+        Assert.assertEquals("торопыжка", decoded)
+    }
 }
