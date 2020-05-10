@@ -18,6 +18,7 @@ class ApplicationModule(context: Context) : Module() {
         AffineCipher.Factory(),
         RouteCipher.Factory(),
         TranspositionWithKeyCipher.Factory(),
+        TransposEasyTableCipher.Factory(),
         DoubleTranspositionCipher.Factory(),
         KardanoCipher.Factory()
     )
