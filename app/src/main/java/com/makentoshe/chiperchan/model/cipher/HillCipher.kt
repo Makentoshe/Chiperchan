@@ -129,4 +129,15 @@ class HillCipher : Cipher {
             (it + 64).toChar().toString()
         }
     }
+
+    class Factory : Cipher.Factory {
+
+        override val title = "Hill cipher"
+
+        override fun build(parameters: Map<String, Any>): HillCipher {
+            return HillCipher()
+        }
+
+        override fun getParameters(): List<Cipher.Parameter> = emptyList()
+    }
 }
