@@ -20,7 +20,8 @@ class ApplicationModule(context: Context) : Module() {
         PlayfairCipher.Factory(),
         GronsfeldCipher.Factory(),
         TrisemusCipher.Factory(),
-        HillCipher.Factory()
+        HillCipher.Factory(),
+        PortaCipher.Factory()
     )
 
     init {

@@ -1,7 +1,6 @@
 package com.makentoshe.chiperchan
 
 import com.makentoshe.chiperchan.model.cipher.KardanoCipher
-import com.makentoshe.chiperchan.model.cipher.MagicSquareCipher
 import junit.framework.Assert.assertEquals
 import org.junit.Test
 
