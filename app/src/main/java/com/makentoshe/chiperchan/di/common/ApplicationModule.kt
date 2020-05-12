@@ -21,7 +21,8 @@ class ApplicationModule(context: Context) : Module() {
         GronsfeldCipher.Factory(),
         TrisemusCipher.Factory(),
         HillCipher.Factory(),
-        PortaCipher.Factory()
+        PortaCipher.Factory(),
+        RichelieuCipher.Factory()
     )
 
     init {
