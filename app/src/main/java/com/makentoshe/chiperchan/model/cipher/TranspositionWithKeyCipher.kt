@@ -97,6 +97,7 @@ class TranspositionWithKeyCipher(private val key: String) : Cipher {
         override fun build(parameters: Map<String, Any>): TranspositionWithKeyCipher {
             val key = (parameters["key"] as? String?)
                 ?: throw IllegalAccessException("`key` parameter is required and should be string")
+
             return TranspositionWithKeyCipher(key)
         }
 
@@ -104,7 +105,7 @@ class TranspositionWithKeyCipher(private val key: String) : Cipher {
             return listOf(
                 Cipher.Parameter(
                     name = "key",
-                    displayName = "key",
+                    displayName = "Key",
                     spec = Cipher.Spec(Cipher.Type.String)
                 )
             )
