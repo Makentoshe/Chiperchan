@@ -23,7 +23,8 @@ class ApplicationModule(context: Context) : Module() {
         HillCipher.Factory(),
         PortaCipher.Factory(),
         RichelieuCipher.Factory(),
-        BovykinCipher.Factory()
+        BovykinCipher.Factory(),
+        LenoreCipher.Factory()
     )
 
     init {
