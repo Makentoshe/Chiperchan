@@ -24,7 +24,8 @@ class ApplicationModule(context: Context) : Module() {
         PortaCipher.Factory(),
         RichelieuCipher.Factory(),
         BovykinCipher.Factory(),
-        LenoreCipher.Factory()
+        LenoreCipher.Factory(),
+        LbnmvCipher.Factory()
     )
 
     init {
